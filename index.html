@@ -178,22 +178,25 @@
     document.getElementById('centerSymbol').textContent = card.symbol;
   }
 
-  function flipCard() {
-    const innerCard = document.getElementById('innerCard');
-    if (!flipped) {
+ function flipCard() {
+  const innerCard = document.getElementById('innerCard');
+  if (!flipped) {
+    innerCard.classList.add('flipped');
+    flipped = true;
+    setTimeout(() => {
+      drawCard();
+    }, 400); // Karte wird erst nach Flip Animation gezeigt
+  } else {
+    innerCard.classList.remove('flipped');
+    flipped = false;
+    setTimeout(() => {
       drawCard();
       innerCard.classList.add('flipped');
       flipped = true;
-    } else {
-      innerCard.classList.remove('flipped');
-      flipped = false;
-      setTimeout(() => {
-        drawCard();
-        innerCard.classList.add('flipped');
-        flipped = true;
-      }, 300);
-    }
+    }, 400); // Warte bis Rückflip vorbei ist
   }
+}
+
 
   function nextDesign() {
     currentDesign = (currentDesign + 1) % 4;
