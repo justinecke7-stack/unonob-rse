@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tutto Karten V2</title>
+<title>Tutto Karten V3</title>
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#a12020" />
 <style>
@@ -178,24 +178,26 @@
     document.getElementById('centerSymbol').textContent = card.symbol;
   }
 
- function flipCard() {
+let flipped = false;
+let waitingForFlipBack = false;
+
+function flipCard() {
   const innerCard = document.getElementById('innerCard');
-  if (!flipped) {
+  
+  if (!flipped && !waitingForFlipBack) {
     innerCard.classList.add('flipped');
     flipped = true;
-    setTimeout(() => {
-      drawCard();
-    }, 400); // Karte wird erst nach Flip Animation gezeigt
-  } else {
+    waitingForFlipBack = true;
+  } else if (flipped && waitingForFlipBack) {
     innerCard.classList.remove('flipped');
     flipped = false;
+    waitingForFlipBack = false;
     setTimeout(() => {
       drawCard();
-      innerCard.classList.add('flipped');
-      flipped = true;
-    }, 400); // Warte bis Rückflip vorbei ist
+    }, 400); // nach Flip zurück neue Karte ziehen
   }
 }
+
 
 
   function nextDesign() {
